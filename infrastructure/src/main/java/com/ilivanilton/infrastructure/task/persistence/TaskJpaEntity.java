@@ -2,6 +2,7 @@ package com.ilivanilton.infrastructure.task.persistence;
 
 
 import com.ilivanilton.domain.task.Task;
+import com.ilivanilton.domain.task.TaskID;
 import jakarta.persistence.*;
 
 import java.time.Instant;
@@ -44,7 +45,7 @@ public class TaskJpaEntity {
 
     public static TaskJpaEntity from(final Task aTask) {
         return new TaskJpaEntity(
-                aTask.getId(),
+                aTask.getId().getValue(),
                 aTask.getDescription(),
                 aTask.isCompleted(),
                 aTask.getCreatedAt(),
@@ -54,7 +55,7 @@ public class TaskJpaEntity {
 
     public Task toAggregate() {
         return Task.with(
-                getId(),
+                TaskID.from(getId()),
                 getDescription(),
                 getCompleted(),
                 getCreatedAt(),

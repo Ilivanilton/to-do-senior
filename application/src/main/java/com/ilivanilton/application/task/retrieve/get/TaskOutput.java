@@ -14,7 +14,7 @@ public record TaskOutput(
 
     public static TaskOutput from(final Task aTask){
         return new TaskOutput(
-                aTask.getId(),
+                aTask.getId().getValue(),
                 aTask.getDescription(),
                 aTask.isCompleted(),
                 aTask.getCreatedAt(),

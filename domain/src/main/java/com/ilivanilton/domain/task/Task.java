@@ -1,22 +1,23 @@
 package com.ilivanilton.domain.task;
 
+import com.ilivanilton.domain.AggregateRoot;
+import com.ilivanilton.domain.validation.ValidationHandler;
+
 import java.time.Instant;
 import java.util.Objects;
-import java.util.UUID;
 
-public class Task {
+public class Task extends AggregateRoot<TaskID> {
 
-    private String id;
     private String description;
     private boolean completed;
     private Instant createdAt;
     private Instant updatedAt;
 
-    private Task(final String anId, final String aDescription,
+    private Task(final TaskID anId, final String aDescription,
                  final boolean aCompleted, final Instant aCreatedAt,
                  final Instant aUpdatedAt
     ){
-        id = Objects.requireNonNull(anId, "id cannot be null");
+        super(anId);
         description = Objects.requireNonNull(aDescription,"'description' must not be null");
         completed = Objects.requireNonNull(aCompleted,"'Completed' must not be null");
         createdAt = Objects.requireNonNull(aCreatedAt,"'CreatedAt' must not be null");
@@ -24,13 +25,13 @@ public class Task {
     }
 
     public static Task create(final String aDescription, final boolean aCompleted) {
-        final String id = UUID.randomUUID().toString();
+        final TaskID id = TaskID.unique();
         final Instant now = Instant.now();
         return new Task(id,aDescription,aCompleted,now,now);
     }
 
     public static Task with(
-            final String anId,
+            final TaskID anId,
             final String aDescription,
             final boolean completed,
             final Instant createdAt,
@@ -58,7 +59,8 @@ public class Task {
         return this;
     }
 
-    public String getId() { return id; }
+    @Override
+    public void validate(ValidationHandler handler) { }
 
     public String getDescription() {
         return description;
