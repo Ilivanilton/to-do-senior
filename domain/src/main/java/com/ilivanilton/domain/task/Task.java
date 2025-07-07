@@ -29,6 +29,16 @@ public class Task {
         return new Task(id,aDescription,aCompleted,now,now);
     }
 
+    public static Task with(
+            final String anId,
+            final String aDescription,
+            final boolean completed,
+            final Instant createdAt,
+            final Instant updatedAt
+    ){
+        return new Task(anId, aDescription, completed, createdAt, updatedAt);
+    }
+
     public Task conclude() {
         this.completed = true;
         this.updatedAt = Instant.now();
@@ -47,6 +57,8 @@ public class Task {
         this.updatedAt = Instant.now();
         return this;
     }
+
+    public String getId() { return id; }
 
     public String getDescription() {
         return description;
