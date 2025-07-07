@@ -1,0 +1,12 @@
+spring:
+  main:
+    banner-mode: off
+
+server:
+  port: 8080
+  server-header: "seu curioso do karalho"
+  servlet:
+    context-path: '/'
+  error:
+    whitelabel:
+      enabled: true

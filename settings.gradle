@@ -1,0 +1,5 @@
+rootProject.name = 'to-do-senior'
+
+include 'domain'
+include 'application'
+include 'infrastructure'
