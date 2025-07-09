@@ -4,6 +4,7 @@ import com.ilivanilton.domain.pagination.Pagination;
 import com.ilivanilton.domain.pagination.SearchQuery;
 import com.ilivanilton.domain.task.Task;
 import com.ilivanilton.domain.task.TaskGateway;
+import com.ilivanilton.domain.task.TaskID;
 import com.ilivanilton.infrastructure.task.persistence.TaskJpaEntity;
 import com.ilivanilton.infrastructure.task.persistence.TaskRepository;
 import org.springframework.data.domain.PageRequest;
@@ -24,8 +25,8 @@ public class TaskH2Gateway implements TaskGateway {
     }
 
     @Override
-    public Optional<Task> findById(final String anId) {
-        return this.repository.findById(anId)
+    public Optional<Task> findById(final TaskID anId) {
+        return this.repository.findById(anId.getValue())
                 .map(TaskJpaEntity::toAggregate);
     }
 

@@ -1,5 +1,8 @@
 ### GET tasksById
 GET http://localhost:8080/api/v1/tasks/123
 
+### GET tasksById notFound
+GET http://localhost:8080/api/v1/tasks/12333
+
 ### GET listAll
 GET http://localhost:8080/api/v1/tasks
