@@ -1,5 +1,6 @@
 package com.ilivanilton.infrastructure.api.controllers;
 
+import com.ilivanilton.application.task.delete.DeleteTaskUseCase;
 import com.ilivanilton.application.task.retrieve.get.GetTaskByIdUseCase;
 import com.ilivanilton.application.task.retrieve.list.ListTaskUseCase;
 import com.ilivanilton.domain.pagination.Pagination;
@@ -16,13 +17,16 @@ public class TaskController implements TaskAPI {
 
     private final GetTaskByIdUseCase getTaskByIdUseCase;
     private final ListTaskUseCase listTaskUseCase;
+    private final DeleteTaskUseCase deleteTaskUseCase;
 
     public TaskController(
             final GetTaskByIdUseCase getTaskByIdUseCase,
-            final ListTaskUseCase listTaskUseCase
+            final ListTaskUseCase listTaskUseCase,
+            final DeleteTaskUseCase deleteTaskUseCase
     ) {
         this.getTaskByIdUseCase = Objects.requireNonNull(getTaskByIdUseCase);
         this.listTaskUseCase = Objects.requireNonNull(listTaskUseCase);
+        this.deleteTaskUseCase = Objects.requireNonNull(deleteTaskUseCase);
     }
 
     @Override
@@ -41,6 +45,11 @@ public class TaskController implements TaskAPI {
         return listTaskUseCase
                 .execute(new SearchQuery(page, perPage, search, sort, direction))
                 .map(TaskApiPresenter::present);
+    }
+
+    @Override
+    public void deleteById(final String id) {
+        deleteTaskUseCase.execute(id);
     }
 
 }

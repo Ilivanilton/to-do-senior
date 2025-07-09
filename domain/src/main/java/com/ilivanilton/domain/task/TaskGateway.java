@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface TaskGateway {
     Optional<Task> findById(TaskID id);
     Pagination<Task> findAll(SearchQuery aQuery);
+    void deleteById(TaskID id);
 }

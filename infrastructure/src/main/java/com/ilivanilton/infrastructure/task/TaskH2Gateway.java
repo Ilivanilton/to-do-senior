@@ -59,4 +59,12 @@ public class TaskH2Gateway implements TaskGateway {
         );
     }
 
+    @Override
+    public void deleteById(TaskID id) {
+        final String anId = id.getValue();
+        if (repository.existsById(anId)) {
+            repository.deleteById(anId);
+        }
+    }
+
 }

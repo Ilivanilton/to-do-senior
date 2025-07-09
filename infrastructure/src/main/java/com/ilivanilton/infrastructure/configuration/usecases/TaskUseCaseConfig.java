@@ -1,5 +1,7 @@
 package com.ilivanilton.infrastructure.configuration.usecases;
 
+import com.ilivanilton.application.task.delete.DefaultDeleteUseCase;
+import com.ilivanilton.application.task.delete.DeleteTaskUseCase;
 import com.ilivanilton.application.task.retrieve.get.DefaultGetTaskByIdUseCase;
 import com.ilivanilton.application.task.retrieve.get.GetTaskByIdUseCase;
 import com.ilivanilton.application.task.retrieve.list.DefaultListTaskUseCase;
@@ -24,5 +26,8 @@ public class TaskUseCaseConfig {
 
     @Bean
     public ListTaskUseCase listTaskUseCase() { return new DefaultListTaskUseCase(taskGateway); }
+
+    @Bean
+    public DeleteTaskUseCase deleteTaskUseCase() { return new DefaultDeleteUseCase((taskGateway)); }
 
 }
