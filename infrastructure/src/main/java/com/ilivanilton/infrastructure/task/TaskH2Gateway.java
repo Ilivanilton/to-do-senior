@@ -67,4 +67,11 @@ public class TaskH2Gateway implements TaskGateway {
         }
     }
 
+    @Override
+    public Task create(Task task) {
+        final TaskJpaEntity jpaEntity = TaskJpaEntity.from(task);
+        final Task newTask = repository.save(jpaEntity).toAggregate();
+        return newTask;
+    }
+
 }
