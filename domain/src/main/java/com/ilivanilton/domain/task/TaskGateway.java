@@ -10,4 +10,5 @@ public interface TaskGateway {
     Pagination<Task> findAll(SearchQuery aQuery);
     void deleteById(TaskID id);
     Task create(Task task);
+    Task update(Task task);
 }

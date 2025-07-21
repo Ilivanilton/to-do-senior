@@ -5,6 +5,7 @@ import com.ilivanilton.domain.pagination.Pagination;
 import com.ilivanilton.infrastructure.task.models.CreateTaskRequest;
 import com.ilivanilton.infrastructure.task.models.TaskListResponse;
 import com.ilivanilton.infrastructure.task.models.TaskResponse;
+import com.ilivanilton.infrastructure.task.models.UpdateTaskRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,5 +38,14 @@ public interface TaskAPI {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     ResponseEntity<?> create(@RequestBody CreateTaskRequest input);
+
+    @PutMapping(
+            value = "{id}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    ResponseEntity<?> updateById(
+            @PathVariable(name = "id") String id,
+            @RequestBody UpdateTaskRequest input);
 
 }

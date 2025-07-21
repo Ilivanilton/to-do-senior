@@ -6,6 +6,9 @@ import com.ilivanilton.application.task.create.CreateTaskUseCase;
 import com.ilivanilton.application.task.delete.DeleteTaskUseCase;
 import com.ilivanilton.application.task.retrieve.get.GetTaskByIdUseCase;
 import com.ilivanilton.application.task.retrieve.list.ListTaskUseCase;
+import com.ilivanilton.application.task.update.UpdateTaskCommand;
+import com.ilivanilton.application.task.update.UpdateTaskOutput;
+import com.ilivanilton.application.task.update.UpdateTaskUseCase;
 import com.ilivanilton.domain.pagination.Pagination;
 import com.ilivanilton.domain.pagination.SearchQuery;
 import com.ilivanilton.infrastructure.api.TaskAPI;
@@ -23,17 +26,20 @@ public class TaskController implements TaskAPI {
     private final ListTaskUseCase listTaskUseCase;
     private final DeleteTaskUseCase deleteTaskUseCase;
     private final CreateTaskUseCase createTaskUseCase;
+    private final UpdateTaskUseCase updateTaskUseCase;
 
     public TaskController(
             final GetTaskByIdUseCase getTaskByIdUseCase,
             final ListTaskUseCase listTaskUseCase,
             final DeleteTaskUseCase deleteTaskUseCase,
-            final CreateTaskUseCase createTaskUseCase
+            final CreateTaskUseCase createTaskUseCase,
+            final UpdateTaskUseCase updateTaskUseCase
     ) {
         this.getTaskByIdUseCase = Objects.requireNonNull(getTaskByIdUseCase);
         this.listTaskUseCase = Objects.requireNonNull(listTaskUseCase);
         this.deleteTaskUseCase = Objects.requireNonNull(deleteTaskUseCase);
         this.createTaskUseCase = Objects.requireNonNull(createTaskUseCase);
+        this.updateTaskUseCase = Objects.requireNonNull(updateTaskUseCase);
     }
 
     @Override
@@ -64,6 +70,19 @@ public class TaskController implements TaskAPI {
         final CreateTaskCommand command = CreateTaskCommand.with(
                 input.description(),input.completed());
         final CreateTaskOutput output = createTaskUseCase.execute(command);
+        final var viewModel = TaskApiPresenter.present(output);
+        return ResponseEntity.ok(viewModel);
+    }
+
+    @Override
+    public ResponseEntity<?> updateById(String id, UpdateTaskRequest input) {
+        final var aCommand = UpdateTaskCommand.with(
+                id,
+                input.description(),
+                input.completed() != null ? input.completed() : true
+        );
+
+        final UpdateTaskOutput output = this.updateTaskUseCase.execute(aCommand);
         final var viewModel = TaskApiPresenter.present(output);
         return ResponseEntity.ok(viewModel);
     }
